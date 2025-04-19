@@ -1,0 +1,1 @@
+Hay 2 ramas, la rama master contiene el codigo y la main contiene la documentacion, para este proyecto se uso bases de datos Apache Derby, entonces lean la documentacion para poder ingresar a las bases de datos
