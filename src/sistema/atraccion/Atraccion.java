@@ -25,7 +25,7 @@ public abstract class Atraccion {
 
 	public Atraccion(String nombreAtraccion, Ubicacion ubicacion, int capacidad, Collection<Empleado> empleados,
 			String restricciones, Clima clima, boolean estadoOperacion, String nivelExclusividad) {
-		super();
+		super();	
 		this.nombreAtraccion = nombreAtraccion;
 		this.ubicacion = ubicacion;
 		this.capacidad = capacidad;
@@ -36,14 +36,6 @@ public abstract class Atraccion {
 		this.nivelExclusividad = nivelExclusividad;
 	}
 
-	
-	public boolean getRestriccion(String restriccion) {
-		if(restricciones.contains(restriccion)) {
-			return true;
-		}
-		return false;
-	}
-	
 	
 	public void cambiarEstadoOperacion(boolean estado) {
 		estadoOperacion = estado;
@@ -90,6 +82,9 @@ public abstract class Atraccion {
 	}
 	
 	
+	
+	
+
 
 	
 }

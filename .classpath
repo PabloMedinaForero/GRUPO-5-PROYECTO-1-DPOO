@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="src/libs/derby.jar"/>
 	<classpathentry kind="lib" path="src/libs/derbyshared.jar"/>
 	<classpathentry kind="lib" path="src/libs/derbytools.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

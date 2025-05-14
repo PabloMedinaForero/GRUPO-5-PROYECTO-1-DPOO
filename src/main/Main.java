@@ -225,8 +225,7 @@ public class Main {
 				Empleado empleado = administrador.crearNuevoEmpleado(IdEmpleado, contrasenia, lunes, martes, miercoles, jueves, viernes, 
 						sabado, domingo, roles, atraccionesCapacitado, turno);
 				empleados.put(IdEmpleado, empleado);
-				
-				conexion.insertarEmpleado(IdEmpleado, contrasenia, roles, atraccionesCapacitado, turno);
+				new Main(usuario);
 				System.out.println("El empleado ha sido aniadido con exito ");
 			}
 			else if (opcion == 2) {
