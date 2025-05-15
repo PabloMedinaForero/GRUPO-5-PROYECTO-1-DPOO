@@ -1,5 +1,9 @@
 package conexion;
 
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,31 +61,37 @@ public class ConexionDerby {
 	//Administradores
 	
 	public static void insertarAdministrador(String id, String contrasenia) {
-        Connection connection = conectar();
-
-        if (connection == null) {
-            System.out.println("No se pudo establecer la conexión con la base de datos.");
-            return;
-        }
-
-        try {
-            String sql = "INSERT INTO administradores (id, contrasenia) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, contrasenia);
-
-            int rows = preparedStatement.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Información agregada correctamente.");
-            } else {
-                System.out.println("No se pudo agregar la información.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            cerrarConexion(connection);
-        }
+		
+		if(id == null | contrasenia == null) {
+			System.out.println("Se detectaron valores nulos en algun campo ");
+		}
+		else {
+	        Connection connection = conectar();
+	
+	        if (connection == null) {
+	            System.out.println("No se pudo establecer la conexión con la base de datos.");
+	            return;
+	        }
+	
+	        try {
+	            String sql = "INSERT INTO administradores (id, contrasenia) VALUES (?, ?)";
+	            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	            preparedStatement.setString(1, id);
+	            preparedStatement.setString(2, contrasenia);
+	
+	            int rows = preparedStatement.executeUpdate();
+	            if (rows > 0) {
+	                System.out.println("Información agregada correctamente.");
+	            } else {
+	                System.out.println("No se pudo agregar la información.");
+	            }
+	
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            cerrarConexion(connection);
+	        }
+		}
     }
 
 	public static HashMap<String, Administrador> obtenerAdministradores() {
@@ -157,6 +167,10 @@ public class ConexionDerby {
 	public static void insertarAtraccion(String nombreAtraccion, int ubicacion, String clima, String nivelExclusividad, String tipoAtraccion,
 	        String restricciones, String nivelRiesgo, String tipoEvento, String empleados, String estadoOperacion, int capacidad) {
 			
+		if (nombreAtraccion == null | ubicacion == 0 | clima == null | nivelExclusividad == null | tipoAtraccion == null | restricciones == null | nivelRiesgo == null |tipoEvento == null | empleados == null |estadoOperacion == null | capacidad == 0) {
+			System.out.println("Hay valores nulos en los ingresados ");
+		}
+		else {
 	        Connection connection = ConexionDerby.conectar();
 
 	        if (connection == null) {
@@ -196,7 +210,8 @@ public class ConexionDerby {
 	        } finally {
 	            ConexionDerby.cerrarConexion(connection);
 	        }
-	    }
+		}
+	}
 	
 	public static HashMap<String, Atraccion> obtenerAtracciones() {
 	    HashMap<String, Atraccion> atracciones = new HashMap<>();
@@ -266,53 +281,65 @@ public class ConexionDerby {
 	}
 
 	public static void ejecutarUpdateAtraccionTexto(String campo, String nuevoValor, String nombreAtraccion) {
-	    Connection connection = conectar();
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    String sql = "UPDATE Atraccion SET " + campo + " = ? WHERE Nombre_Atraccion = ?";
-	    try {
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setString(1, nuevoValor);
-	        statement.setString(2, nombreAtraccion);
-	        int filas = statement.executeUpdate();
-	        if (filas > 0) {
-	            System.out.println("Campo " + campo + " actualizado correctamente.");
-	        } else {
-	            System.out.println("Atracción no encontrada: " + nombreAtraccion);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(campo == null | nuevoValor == null | nombreAtraccion == null) {
+			System.out.println("Hay valores nulos en los parametros ");
+		}
+		else {
+		    Connection connection = conectar();
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    String sql = "UPDATE Atraccion SET " + campo + " = ? WHERE Nombre_Atraccion = ?";
+		    try {
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, nuevoValor);
+		        statement.setString(2, nombreAtraccion);
+		        int filas = statement.executeUpdate();
+		        if (filas > 0) {
+		            System.out.println("Campo " + campo + " actualizado correctamente.");
+		        } else {
+		            System.out.println("Atracción no encontrada: " + nombreAtraccion);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	public static void ejecutarUpdateAtraccionInt(String campo, int nuevoValor, String nombreAtraccion) {
-	    Connection connection = conectar();
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    String sql = "UPDATE Atraccion SET " + campo + " = ? WHERE Nombre_Atraccion = ?";
-	    try {
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setInt(1, nuevoValor);
-	        statement.setString(2, nombreAtraccion);
-	        int filas = statement.executeUpdate();
-	        if (filas > 0) {
-	            System.out.println("Campo " + campo + " actualizado correctamente.");
-	        } else {
-	            System.out.println("Atracción no encontrada: " + nombreAtraccion);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(campo == null | nuevoValor == 0 | nombreAtraccion == null) {
+			System.out.println("Hay valores nulos en los parametros ");
+		}
+		else {
+		    Connection connection = conectar();
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    String sql = "UPDATE Atraccion SET " + campo + " = ? WHERE Nombre_Atraccion = ?";
+		    try {
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setInt(1, nuevoValor);
+		        statement.setString(2, nombreAtraccion);
+		        int filas = statement.executeUpdate();
+		        if (filas > 0) {
+		            System.out.println("Campo " + campo + " actualizado correctamente.");
+		        } else {
+		            System.out.println("Atracción no encontrada: " + nombreAtraccion);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	
@@ -348,37 +375,43 @@ public class ConexionDerby {
     }
 
 	public static void insertarEmpleado(String idEmpleado, String contrasenia, String roles, String capacitacionMecanicas, String turno) {
-	    Connection connection = conectar(); 
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    try {
-	        String sql = "INSERT INTO Empleados (Id_Empleado, Contrasenia, Roles, Capacitacion_Mecanicas, Turno) VALUES (?, ?, ?, ?, ?)";
-	        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-	        
-	        preparedStatement.setString(1, idEmpleado);
-	        preparedStatement.setString(2, contrasenia);
-	        preparedStatement.setString(3, roles);
-	        preparedStatement.setString(4, capacitacionMecanicas);
-	        preparedStatement.setString(5, turno);
-
-	        int rows = preparedStatement.executeUpdate(); 
-
-	        if (rows > 0) {
-	            System.out.println("Empleado agregado correctamente.");
-	        } else {
-	            System.out.println("No se pudo agregar el empleado.");
-	        }
-
-	    } catch (SQLException e) {
-	        System.out.println("Error al agregar empleado: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection); 
-	    }
+		
+		if(idEmpleado == null | contrasenia == null | roles == null | capacitacionMecanicas ==  null | turno == null) {
+			System.out.println("Hay valores nulos en los ingresados ");
+		}
+		else {
+		    Connection connection = conectar(); 
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    try {
+		        String sql = "INSERT INTO Empleados (Id_Empleado, Contrasenia, Roles, Capacitacion_Mecanicas, Turno) VALUES (?, ?, ?, ?, ?)";
+		        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		        
+		        preparedStatement.setString(1, idEmpleado);
+		        preparedStatement.setString(2, contrasenia);
+		        preparedStatement.setString(3, roles);
+		        preparedStatement.setString(4, capacitacionMecanicas);
+		        preparedStatement.setString(5, turno);
+	
+		        int rows = preparedStatement.executeUpdate(); 
+	
+		        if (rows > 0) {
+		            System.out.println("Empleado agregado correctamente.");
+		        } else {
+		            System.out.println("No se pudo agregar el empleado.");
+		        }
+	
+		    } catch (SQLException e) {
+		        System.out.println("Error al agregar empleado: " + e.getMessage());
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection); 
+		    }
+		}
 	}
 
 	public static HashMap<String, Empleado> obtenerEmpleados() {
@@ -417,63 +450,77 @@ public class ConexionDerby {
 	}
 	
 	public static void cambiarCapacitacion(String idEmpleado, String nuevaCapacitacion) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    String sql = "UPDATE Empleados SET Capacitacion_Mecanicas = ? WHERE Id_Empleado = ?";
-
-	    try {
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setString(1, nuevaCapacitacion);
-	        statement.setString(2, idEmpleado);
-
-	        int filas = statement.executeUpdate();
-	        if (filas > 0) {
-	            System.out.println("Capacitación actualizada correctamente para el empleado con ID: " + idEmpleado);
-	        } else {
-	            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
-	        }
-
-	    } catch (SQLException e) {
-	        System.out.println("Error al cambiar la capacitación: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(idEmpleado == null | nuevaCapacitacion ==  null) {
+			System.out.println("Hay valores nulos en los ingresados ");
+		}
+		else {
+		
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    String sql = "UPDATE Empleados SET Capacitacion_Mecanicas = ? WHERE Id_Empleado = ?";
+	
+		    try {
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, nuevaCapacitacion);
+		        statement.setString(2, idEmpleado);
+	
+		        int filas = statement.executeUpdate();
+		        if (filas > 0) {
+		            System.out.println("Capacitación actualizada correctamente para el empleado con ID: " + idEmpleado);
+		        } else {
+		            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
+		        }
+	
+		    } catch (SQLException e) {
+		        System.out.println("Error al cambiar la capacitación: " + e.getMessage());
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	public static void cambiarRol(String idEmpleado, String nuevoRol) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    String sql = "UPDATE Empleados SET Roles = ? WHERE Id_Empleado = ?";
-
-	    try {
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setString(1, nuevoRol);
-	        statement.setString(2, idEmpleado);
-
-	        int filas = statement.executeUpdate();
-	        if (filas > 0) {
-	            System.out.println("Rol actualizado correctamente para el empleado con ID: " + idEmpleado);
-	        } else {
-	            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
-	        }
-
-	    } catch (SQLException e) {
-	        System.out.println("Error al cambiar el rol: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(idEmpleado == null | nuevoRol ==  null) {
+			System.out.println("Hay valores nulos en los ingresados ");
+		}
+		else {
+		
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    String sql = "UPDATE Empleados SET Roles = ? WHERE Id_Empleado = ?";
+	
+		    try {
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, nuevoRol);
+		        statement.setString(2, idEmpleado);
+	
+		        int filas = statement.executeUpdate();
+		        if (filas > 0) {
+		            System.out.println("Rol actualizado correctamente para el empleado con ID: " + idEmpleado);
+		        } else {
+		            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
+		        }
+	
+		    } catch (SQLException e) {
+		        System.out.println("Error al cambiar el rol: " + e.getMessage());
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	//Horarios
@@ -516,38 +563,44 @@ public class ConexionDerby {
 
 	public static void insertarHorario(String idEmpleado, String lunes, String martes, String miercoles, 
             String jueves, String viernes, String sabado, String domingo) {
-		Connection connection = conectar();
 		
-		if (connection == null) {
-			System.out.println("No se pudo conectar a la base de datos.");
-			return;
+		if(idEmpleado == null | lunes == null | martes == null | miercoles == null | jueves  == null | viernes == null | sabado == null | domingo == null) {
+			System.out.println("Hay valores nulos en los ingresados ");
 		}
-		
-		String sql = "INSERT INTO Horarios (Id_Empleado, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) " +
-		"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-		
-		try {
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, idEmpleado);
-			statement.setString(2, lunes);
-			statement.setString(3, martes);
-			statement.setString(4, miercoles);
-			statement.setString(5, jueves);
-			statement.setString(6, viernes);
-			statement.setString(7, sabado);
-			statement.setString(8, domingo);
+		else {
+			Connection connection = conectar();
 			
-			int filas = statement.executeUpdate();
-			if (filas > 0) {
-				System.out.println("Horario insertado correctamente.");
+			if (connection == null) {
+				System.out.println("No se pudo conectar a la base de datos.");
+				return;
 			}
-		} 
-		catch (SQLException e) {
-			System.out.println("Error al insertar el horario: " + e.getMessage());
-			e.printStackTrace();
-		} 
-		finally {
-			cerrarConexion(connection);
+			
+			String sql = "INSERT INTO Horarios (Id_Empleado, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) " +
+			"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			try {
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, idEmpleado);
+				statement.setString(2, lunes);
+				statement.setString(3, martes);
+				statement.setString(4, miercoles);
+				statement.setString(5, jueves);
+				statement.setString(6, viernes);
+				statement.setString(7, sabado);
+				statement.setString(8, domingo);
+				
+				int filas = statement.executeUpdate();
+				if (filas > 0) {
+					System.out.println("Horario insertado correctamente.");
+				}
+			} 
+			catch (SQLException e) {
+				System.out.println("Error al insertar el horario: " + e.getMessage());
+				e.printStackTrace();
+			} 
+			finally {
+				cerrarConexion(connection);
+			}
 		}
 	}
 
@@ -590,40 +643,46 @@ public class ConexionDerby {
 	}
 
 	public static void cambiarHorario(String idEmpleado, String diaSemana, String nuevaActividad) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    List<String> diasValidos = Arrays.asList("Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo");
-	    if (!diasValidos.contains(diaSemana)) {
-	        System.out.println("Día de la semana no válido: " + diaSemana);
-	        cerrarConexion(connection);
-	        return;
-	    }
-
-	    String sql = "UPDATE Horarios SET " + diaSemana + " = ? WHERE Id_Empleado = ?";
-
-	    try {
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setString(1, nuevaActividad);
-	        statement.setString(2, idEmpleado);
-
-	        int filas = statement.executeUpdate();
-	        if (filas > 0) {
-	            System.out.println("Horario actualizado correctamente para " + diaSemana + ".");
-	        } else {
-	            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
-	        }
-
-	    } catch (SQLException e) {
-	        System.out.println("Error al cambiar el horario: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(idEmpleado == null | diaSemana ==  null | nuevaActividad == null) {
+			System.out.println("Hay valores nulos en los ingresados ");
+		}
+		else {
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    List<String> diasValidos = Arrays.asList("Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo");
+		    if (!diasValidos.contains(diaSemana)) {
+		        System.out.println("Día de la semana no válido: " + diaSemana);
+		        cerrarConexion(connection);
+		        return;
+		    }
+	
+		    String sql = "UPDATE Horarios SET " + diaSemana + " = ? WHERE Id_Empleado = ?";
+	
+		    try {
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, nuevaActividad);
+		        statement.setString(2, idEmpleado);
+	
+		        int filas = statement.executeUpdate();
+		        if (filas > 0) {
+		            System.out.println("Horario actualizado correctamente para " + diaSemana + ".");
+		        } else {
+		            System.out.println("No se encontró el empleado con ID: " + idEmpleado);
+		        }
+	
+		    } catch (SQLException e) {
+		        System.out.println("Error al cambiar el horario: " + e.getMessage());
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	//Lugares de servicio
@@ -657,50 +716,61 @@ public class ConexionDerby {
 	}
 
 	public void ejecutarUpdateLugares(String campo, String nuevoValor, String nombreLugar) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    try {
-	        String sql = "UPDATE Lugares_de_servicio SET " + campo + " = ? WHERE Nombre_Lugar = ?";
-	        PreparedStatement pstmt = connection.prepareStatement(sql);
-	        pstmt.setString(1, nuevoValor);
-	        pstmt.setString(2, nombreLugar);
-	        pstmt.executeUpdate();
-	        System.out.println("Campo '" + campo + "' actualizado correctamente.");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		if(campo ==  null | nuevoValor ==  null | nombreLugar ==  null) {
+			System.out.println("Hay valores nulos en los ingresados");
+		}
+		else {
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    try {
+		        String sql = "UPDATE Lugares_de_servicio SET " + campo + " = ? WHERE Nombre_Lugar = ?";
+		        PreparedStatement pstmt = connection.prepareStatement(sql);
+		        pstmt.setString(1, nuevoValor);
+		        pstmt.setString(2, nombreLugar);
+		        pstmt.executeUpdate();
+		        System.out.println("Campo '" + campo + "' actualizado correctamente.");
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	public static void insertarLugarDeServicio(String nombreLugar, String cajero, String tipoLugar, String empleadoAuxiliar) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    try {
-	        String sql = "INSERT INTO Lugares_de_servicio (Nombre_Lugar, Cajero, Tipo_Lugar, Empleado_Auxiliar) VALUES (?, ?, ?, ?)";
-	        PreparedStatement pstmt = connection.prepareStatement(sql);
-	        pstmt.setString(1, nombreLugar);
-	        pstmt.setString(2, cajero);
-	        pstmt.setString(3, tipoLugar);
-	        pstmt.setString(4, empleadoAuxiliar);
-
-	        pstmt.executeUpdate();
-	        System.out.println("Lugar de servicio insertado correctamente.");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(nombreLugar ==  null | cajero ==  null |  tipoLugar == null | empleadoAuxiliar ==  null) {
+			System.out.println("Hay valores nulos en los ingresados");
+		}
+		else {
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    try {
+		        String sql = "INSERT INTO Lugares_de_servicio (Nombre_Lugar, Cajero, Tipo_Lugar, Empleado_Auxiliar) VALUES (?, ?, ?, ?)";
+		        PreparedStatement pstmt = connection.prepareStatement(sql);
+		        pstmt.setString(1, nombreLugar);
+		        pstmt.setString(2, cajero);
+		        pstmt.setString(3, tipoLugar);
+		        pstmt.setString(4, empleadoAuxiliar);
+	
+		        pstmt.executeUpdate();
+		        System.out.println("Lugar de servicio insertado correctamente.");
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	public static HashMap<String, LugarDeServicio> obtenerLugaresDeServicio() {

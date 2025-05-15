@@ -127,7 +127,7 @@ public class Empleado {
 			String nuevosRoles = input.nextLine();
 			this.roles = nuevosRoles;
 			System.out.println("Los roles del empleado son las siguientes: " + empleado.getRoles());
-			conexion.cambiarCapacitacion(idEmpleado, nuevosRoles);
+			conexion.cambiarRol(idEmpleado, nuevosRoles);
 			input.nextLine();
 		}
 	}
