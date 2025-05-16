@@ -766,7 +766,7 @@ public class ConexionDerby {
 		        pstmt.executeUpdate();
 		        System.out.println("Lugar de servicio insertado correctamente.");
 		    } catch (SQLException e) {
-		        e.printStackTrace();
+		    	System.out.println("No se agrego...");
 		    } finally {
 		        cerrarConexion(connection);
 		    }
@@ -836,26 +836,32 @@ public class ConexionDerby {
 	}
 
 	public static void insertarCliente(String nombreCliente, String contrasenia) {
-	    Connection connection = conectar();
-
-	    if (connection == null) {
-	        System.out.println("No se pudo conectar a la base de datos.");
-	        return;
-	    }
-
-	    try {
-	        String sql = "INSERT INTO Clientes (Nombre_Cliente, Contrasenia) VALUES (?, ?)";
-	        PreparedStatement pstmt = connection.prepareStatement(sql);
-	        pstmt.setString(1, nombreCliente);
-	        pstmt.setString(2, contrasenia);
-
-	        pstmt.executeUpdate();
-	        System.out.println("Cliente insertado correctamente.");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
+		
+		if(nombreCliente == null | contrasenia == null ) {
+			System.out.println("Hay valores nulos en los ingresados");
+		}
+		else {
+		    Connection connection = conectar();
+	
+		    if (connection == null) {
+		        System.out.println("No se pudo conectar a la base de datos.");
+		        return;
+		    }
+	
+		    try {
+		        String sql = "INSERT INTO Clientes (Nombre_Cliente, Contrasenia) VALUES (?, ?)";
+		        PreparedStatement pstmt = connection.prepareStatement(sql);
+		        pstmt.setString(1, nombreCliente);
+		        pstmt.setString(2, contrasenia);
+	
+		        pstmt.executeUpdate();
+		        System.out.println("Cliente insertado correctamente.");
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
 	}
 
 	public static HashMap<String, Cliente> obtenerClientes() {
@@ -924,48 +930,53 @@ public class ConexionDerby {
 	public static void insertarTiquete(String idComprador, String fechaInicial, String fechaFinal,
             String temporada, String tipoTiquete, String uso,
             String atraccionesValidas, String esFastPass) {
-		Connection connection = ConexionDerby.conectar();
-
-	if (connection == null) {
-		System.out.println("No se pudo conectar a la base de datos.");
-		return;
-	}
-
-	try {
-		String obtenerCantidad = "SELECT COUNT(*) FROM Tiquetes";
-		Statement stmt = connection.createStatement();
-		ResultSet rs = stmt.executeQuery(obtenerCantidad);
-		int nuevoNumero = 0;
-		if (rs.next()) {
-			nuevoNumero = rs.getInt(1) + 1;
+		
+		if(idComprador == null | fechaInicial == null | fechaFinal == null | temporada == null | tipoTiquete == null | uso == null | atraccionesValidas == null | esFastPass == null) {
+			System.out.println("Hay valores nulos en los ingresados");
 		}
-		String numeroTiquete = "TQ" + nuevoNumero;  	
-		String sql = "INSERT INTO Tiquetes (Numero_Tiquete, Id_comprador, Fecha_Inicial, Fecha_Final, Temporada, Tipo_Tiquete, Uso, Atracciones_Validas, Es_Fast_Pass) " +
-				"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, numeroTiquete);
-		statement.setString(2, idComprador);
-		statement.setString(3, fechaInicial);
-		statement.setString(4, fechaFinal);
-		statement.setString(5, temporada);
-		statement.setString(6, tipoTiquete);
-		statement.setString(7, uso);
-		statement.setString(8, atraccionesValidas);
-		statement.setString(9, esFastPass);
-	
-		int filas = statement.executeUpdate();
-		if (filas > 0) {
-			System.out.println("Tiquete insertado correctamente con número: " + numeroTiquete);
+		else {
+			Connection connection = ConexionDerby.conectar();
+			if (connection == null) {
+				System.out.println("No se pudo conectar a la base de datos.");
+				return;
+			}
+		
+			try {
+				String obtenerCantidad = "SELECT COUNT(*) FROM Tiquetes";
+				Statement stmt = connection.createStatement();
+				ResultSet rs = stmt.executeQuery(obtenerCantidad);
+				int nuevoNumero = 0;
+				if (rs.next()) {
+					nuevoNumero = rs.getInt(1) + 1;
+				}
+				String numeroTiquete = "TQ" + nuevoNumero;  	
+				String sql = "INSERT INTO Tiquetes (Numero_Tiquete, Id_comprador, Fecha_Inicial, Fecha_Final, Temporada, Tipo_Tiquete, Uso, Atracciones_Validas, Es_Fast_Pass) " +
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, numeroTiquete);
+				statement.setString(2, idComprador);
+				statement.setString(3, fechaInicial);
+				statement.setString(4, fechaFinal);
+				statement.setString(5, temporada);
+				statement.setString(6, tipoTiquete);
+				statement.setString(7, uso);
+				statement.setString(8, atraccionesValidas);
+				statement.setString(9, esFastPass);
+			
+				int filas = statement.executeUpdate();
+				if (filas > 0) {
+					System.out.println("Tiquete insertado correctamente con número: " + numeroTiquete);
+				}
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			} 
+			finally {
+				ConexionDerby.cerrarConexion(connection);
+			}
 		}
-	} 
-	catch (SQLException e) {
-		e.printStackTrace();
-	} 
-	finally {
-		ConexionDerby.cerrarConexion(connection);
 	}
-}
 
 	public static HashMap<String, Tiquete> obtenerTiquetes() {
 	    HashMap<String, Tiquete> mapaTiquetes = new HashMap<>();
@@ -1038,21 +1049,27 @@ public class ConexionDerby {
 	}
 
 	public void ejecutarUpdateTiqueteString(String campo, String nuevoValor, String numeroTiquete) {
-	    Connection connection = conectar();
-	    if (connection == null) return;
-
-	    try {
-	        String sql = "UPDATE Tiquetes SET " + campo + " = ? WHERE Numero_Tiquete = ?";
-	        PreparedStatement statement = connection.prepareStatement(sql);
-	        statement.setString(1, nuevoValor);
-	        statement.setString(2, numeroTiquete);
-	        statement.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        cerrarConexion(connection);
-	    }
-	}
-
+		
+		if(campo == null | nuevoValor == null | numeroTiquete == null) {
+			System.out.println("Hay valores nulos en los ingresados");
+		}
+		else {
+		    Connection connection = conectar();
+		    if (connection == null) return;
 	
-}
+		    try {
+		        String sql = "UPDATE Tiquetes SET " + campo + " = ? WHERE Numero_Tiquete = ?";
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, nuevoValor);
+		        statement.setString(2, numeroTiquete);
+		        statement.executeUpdate();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        cerrarConexion(connection);
+		    }
+		}
+	}
+	
+		
+	}

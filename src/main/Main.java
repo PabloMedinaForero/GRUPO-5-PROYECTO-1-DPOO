@@ -458,12 +458,14 @@ public class Main {
 			
 			if (opcion == 1) {
 				System.out.print("Ingrese el nombre del lugar: ");
-				String nombreLugar = input.nextLine();
-				input.nextLine();
+				String nombreLugar = input.next();
+				System.out.println("Has ingresado: " + nombreLugar);
+				
 				
 				System.out.print("Ingrese el nombre del cajero (empleado): ");
 				String cajero = input.nextLine();
-				input.nextLine();
+				//input.nextLine();
+				System.out.println(cajero);///////////////////////
 				
 				if(empleados.get(cajero) == null) {
 					System.out.println("No se ha encontrado a este empleado... ");
@@ -473,6 +475,7 @@ public class Main {
 				System.out.print("Ingrese el tipo de lugar (tienda, cafeteria o taquilla): ");
 				String tipoLugar = input.nextLine();
 				input.nextLine();
+				
 				
 				String empleadoAux;
 				if(tipoLugar.contains("taquilla") || tipoLugar.contains("tienda")) {
@@ -485,7 +488,7 @@ public class Main {
 					input.nextLine();
 					Empleado empleado = empleados.get(cocinero);
 					if(empleado != null) {
-						if(empleado.getRoles().contains("cociner")) {
+						if(empleado.getRoles().toLowerCase().contains("cociner")) {
 							conexion.insertarLugarDeServicio(nombreLugar, cajero, tipoLugar, cocinero);
 						}
 						else {

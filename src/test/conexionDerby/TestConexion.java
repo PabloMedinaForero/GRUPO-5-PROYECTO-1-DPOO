@@ -45,10 +45,17 @@ public class TestConexion {
 		//funciones lugares de servicios
 		conexion.insertarLugarDeServicio(null, null, null, null);
 		assertEquals(null, conexion.obtenerLugaresDeServicio().get(null));
-		conexion.ejecutarUpdateLugares(null, null, "TikTok");
-		assertEquals(null, conexion.obtenerLugaresDeServicio().get("TikTok").getTipoLugar());
+		conexion.ejecutarUpdateLugares(null, null, "SeneCafe");
+		assertEquals("cafeteria", conexion.obtenerLugaresDeServicio().get("SeneCafe").getTipoLugar());
 		
+		//funciones clientes
+		conexion.insertarCliente("feid", null);
+		assertEquals(null, conexion.obtenerClientes().get("feid"));
+		
+		//funciones tiquetes
+		conexion.insertarTiquete(null, null, null, null, null, null, null, null);
+		assertEquals(null, conexion.obtenerTiquetes().get(null));
+		conexion.ejecutarUpdateTiqueteString(null, null, "TQ2");
+		assertEquals("oro", conexion.obtenerTiquetes().get("TQ2").getTipo());
 	}
-	
-
 }
