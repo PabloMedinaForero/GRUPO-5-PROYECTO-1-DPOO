@@ -1,88 +1,68 @@
 package interfaz;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import crearFrames.Ventana;
 
 public class Ventana extends JFrame {
 
 	private static JTabbedPane tabbedPane;
 	private static JPanel panel1;
-	private static JPanel panel2;
 
 	public static void main(String[] args) {
 		Ventana ventana = new Ventana();
 		ventana.setSize(500, 500);
 		ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		tabbedPane = new JTabbedPane();
 		panel1 = new JPanel();
-		
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+
 		JLabel lbl = new JLabel("Bienvenidos a Senec Park");
+		lbl.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		panel1.add(Box.createVerticalStrut(20));
 		panel1.add(lbl);
-				
-		String[] lista = {"Administrador", "Empleado", "Cliente"};
-		JList list = new JList(lista);
-		list.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-		            System.out.println(e);
-		            JDialog dialog = new JDialog();
-		            JPanel innerPane = new JPanel();
-		            int index = e.getLastIndex();
-		            String opcion = "";
-		            if(index == 0) {
-		            	opcion = "Administrador";
-		            }
-		            else if (index == 1) {
-		            	opcion = "Empleado";
-		            }
-		            else if (index == 2) {
-		            	opcion = "Cliente";
-		            }
-		            
-		            JLabel lbl = new JLabel(opcion);
-		            innerPane.add(lbl);
-		            
-		            dialog.add(innerPane);
-		            
-		            dialog.setTitle(opcion);
-		            dialog.setSize(500, 500);
-		            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		            dialog.setVisible(true);
-		        }
+
+		// Botón Administrador
+		JButton btnAdmin = new JButton("Administrador");
+		btnAdmin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaAdministrador();
 			}
 		});
-		JScrollPane scroll = new JScrollPane(list);
-		panel1.add(scroll);
+
+		// Botón Empleado
+		JButton btnEmpleado = new JButton("Empleado");
+		btnEmpleado.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnEmpleado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaEmpleado();
+			}
+		});
+
+		// Botón Cliente
+		JButton btnCliente = new JButton("Cliente");
+		btnCliente.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaCliente();
+			}
+		});
+
+		panel1.add(Box.createVerticalStrut(20));
+		panel1.add(btnAdmin);
+		panel1.add(Box.createVerticalStrut(10));
+		panel1.add(btnEmpleado);
+		panel1.add(Box.createVerticalStrut(10));
+		panel1.add(btnCliente);
+		panel1.add(Box.createVerticalStrut(30));
+
+		JLabel otroElemento = new JLabel("Aquí puedes poner más contenido debajo");
+		otroElemento.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		panel1.add(otroElemento);
+
 		tabbedPane.add("http://SenecPark.com", panel1);
 		ventana.add(tabbedPane);
 		ventana.setVisible(true);
 	}
-
-	public void menuAdministrador() {
-		
-		Ventana ventana = new Ventana();
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
