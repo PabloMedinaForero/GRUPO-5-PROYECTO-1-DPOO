@@ -11,7 +11,7 @@ import sistema.atraccion.AtraccionCultural;
 import sistema.atraccion.AtraccionMecanica;
 import sistema.lugarDeServicio.LugarDeServicio;
 
-public class Administrador {
+public class Administrador implements Usuario{
 	
 	private String id;
 	private String contrasenia;
@@ -19,9 +19,11 @@ public class Administrador {
 		this.id = id;
 		this.contrasenia = contrasenia;
 	}
-	public String getId() {
+	@Override
+	public String getUsuario() {
 		return id;
 	}
+	@Override
 	public String getContrasenia() {
 		return contrasenia;
 	}
@@ -172,6 +174,7 @@ public class Administrador {
 	    ConexionDerby conexion = new ConexionDerby();
 	    conexion.ejecutarUpdateLugares("Empleado_Auxiliar", nuevoEmpleadoAuxiliar, nombreLugar);
 	}
+	
 
 	
 	

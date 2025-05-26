@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 class VentanaCliente extends JFrame {
@@ -13,7 +14,16 @@ class VentanaCliente extends JFrame {
 		setTitle("Panel Cliente");
 		setSize(500, 500);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		VentanaLogin login = new VentanaLogin(this,"cliente");
+		boolean accesoPermitido = login.mostrarDialogo();
 
+		if (!accesoPermitido) {
+			JOptionPane.showMessageDialog(this, "Acceso denegado", "Error", JOptionPane.ERROR_MESSAGE);
+			dispose();
+			return;
+		}
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 

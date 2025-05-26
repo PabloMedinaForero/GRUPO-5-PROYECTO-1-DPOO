@@ -19,13 +19,13 @@ public class TestCliente {
 	
 	@Test
 	public void testValoresNulos() {
-		assertNotNull(cliente.getNombre());
+		assertNotNull(cliente.getUsuario());
 		assertNotNull(cliente.getContrasenia());
 	}
 	
 	@Test
 	public void testValoresString() {
-		assertTrue(cliente.getNombre() instanceof String, "Nombre no es String");
+		assertTrue(cliente.getUsuario() instanceof String, "Nombre no es String");
 		assertTrue(cliente.getContrasenia() instanceof String, "Nombre no es String");
 	}
 	

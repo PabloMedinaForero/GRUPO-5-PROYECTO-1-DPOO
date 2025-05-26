@@ -48,7 +48,7 @@ public class Main {
 		this.empleados = conexion.obtenerEmpleados();
 		Collection<Empleado> listaEmpleados = empleados.values();
         for (Empleado empleado: listaEmpleados) {
-        	Horario horario = horarios.get(empleado.getIdEmpleado());
+        	Horario horario = horarios.get(empleado.getUsuario());
         	if (horario != null) {
         		empleado.cambiarHorario(horario);
         	} 
@@ -283,7 +283,7 @@ public class Main {
 			if(opcion == 1) {
 				System.out.println("=== Seleccione que tipo de atraccion desea crear ===");
 				System.out.println("1. Para crear una atraccion mecanica ");
-				System.out.println("2. Parar crear una atraccion cultural/evento ");
+				System.out.println("2. Para crear una atraccion cultural/evento ");
 				System.out.print("Ingrese su opcion ");
 				int opcionMecanicaCultural = input.nextInt();
 				if(opcionMecanicaCultural == 1) {

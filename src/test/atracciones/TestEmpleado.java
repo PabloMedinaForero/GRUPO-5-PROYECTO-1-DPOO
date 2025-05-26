@@ -28,7 +28,7 @@ public class TestEmpleado {
 
 	@Test
 	public void testValoresNulos() {
-		assertNotNull(empleado.getIdEmpleado());
+		assertNotNull(empleado.getUsuario());
 		assertNotNull(empleado.getContrasenia());
 		assertNotNull(empleado.getHorario());
 		assertNotNull(empleado.getRoles());
@@ -38,7 +38,7 @@ public class TestEmpleado {
 	
 	@Test
 	public void testValoresString() {
-	    assertTrue(empleado.getIdEmpleado() instanceof String, "IdEmpleado no es String");
+	    assertTrue(empleado.getUsuario() instanceof String, "IdEmpleado no es String");
 	    assertTrue(empleado.getContrasenia() instanceof String, "Contrasenia no es String");
 	    assertTrue(empleado.getRoles() instanceof String, "Roles no es String");
 	    assertTrue(empleado.getAtraccionesCapacitado() instanceof String, "AtraccionesCapacitado no es String");

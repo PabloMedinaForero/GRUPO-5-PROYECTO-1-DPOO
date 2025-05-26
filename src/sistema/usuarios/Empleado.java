@@ -8,7 +8,7 @@ import conexion.ConexionDerby;
 import sistema.Horario;
 import sistema.atraccion.Atraccion;
 
-public class Empleado {
+public class Empleado implements Usuario {
 
 	private String idEmpleado;
 	private String contrasenia;
@@ -31,10 +31,10 @@ public class Empleado {
 		this.horario = horario;
 	}
 
-	public String getIdEmpleado() {
+	public String getUsuario() {
 		return idEmpleado;
 	}
-
+	@Override
 	public String getContrasenia() {
 		return contrasenia;
 	}
