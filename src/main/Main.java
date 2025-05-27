@@ -73,13 +73,7 @@ public class Main {
 	         System.out.println("Saliendo del sistema...");
 	      }
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 	public static int printMainMenu() {
 		Scanner inputOpcion = new Scanner(System.in);
 		System.out.println("=== Bienvenido al sistema ===");

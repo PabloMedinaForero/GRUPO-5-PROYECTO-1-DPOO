@@ -2,6 +2,8 @@ package interfaz.ventanasOpcionesAdministrador;
 
 import javax.swing.*;
 
+import conexion.ConexionDerby;
+import interfaz.VentanaVerAtracciones;
 import sistema.atraccion.Atraccion;
 import sistema.lugarDeServicio.LugarDeServicio;
 import sistema.usuarios.Empleado;
@@ -12,9 +14,12 @@ import java.util.HashMap;
 
 public class VentanaOpcionesAtracciones extends JFrame {
 
-    public VentanaOpcionesAtracciones(HashMap<String, Empleado> mapaEmpleados, HashMap<String, Atraccion> mapaAtracciones, HashMap<String, LugarDeServicio> mapaLugarDeServicio) {
+    public VentanaOpcionesAtracciones() {
+    	ConexionDerby conexion = new ConexionDerby();
+		HashMap<String, Empleado> mapaEmpleados = conexion.obtenerEmpleados();
+		HashMap<String, LugarDeServicio> mapaLugarDeServicio = conexion.obtenerLugaresDeServicio();
         setTitle("Opciones de Atracciones");
-        setSize(400, 300);
+        setSize(500, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -29,7 +34,7 @@ public class VentanaOpcionesAtracciones extends JFrame {
         btnRegistrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Registrar nueva atracción");
-                new VentanaRegistrarAtraccion(VentanaOpcionesAtracciones.this, mapaEmpleados, mapaAtracciones);
+                new VentanaRegistrarAtraccion(VentanaOpcionesAtracciones.this, mapaEmpleados);
             }
         });
 
@@ -37,8 +42,18 @@ public class VentanaOpcionesAtracciones extends JFrame {
         btnModificar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnModificar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí va la lógica para modificar una atracción
                 System.out.println("Modificar campo específico de atracción");
+                new VentanaCambiarInformacionAtraccion(VentanaOpcionesAtracciones.this);
+            }
+        });
+        
+        JButton btnVerAtracciones = new JButton("Ver información de atracciones");
+        btnVerAtracciones.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnVerAtracciones.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Ver atracciones");
+                HashMap<String, Atraccion> mapaAtracciones = conexion.obtenerAtracciones();
+                new VentanaVerAtracciones(mapaAtracciones);
             }
         });
 
@@ -54,6 +69,8 @@ public class VentanaOpcionesAtracciones extends JFrame {
         panel.add(titulo);
         panel.add(Box.createVerticalStrut(20));
         panel.add(btnRegistrar);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(btnVerAtracciones);
         panel.add(Box.createVerticalStrut(10));
         panel.add(btnModificar);
         panel.add(Box.createVerticalStrut(10));

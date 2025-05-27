@@ -12,6 +12,7 @@ public class Ventana extends JFrame {
 		Ventana ventana = new Ventana();
 		ventana.setSize(500, 500);
 		ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		ventana.setLocationRelativeTo(null);
 		
 		tabbedPane = new JTabbedPane();
 		panel1 = new JPanel();

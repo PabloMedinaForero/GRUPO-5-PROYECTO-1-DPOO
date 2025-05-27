@@ -1,9 +1,6 @@
 package conexion;
 
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

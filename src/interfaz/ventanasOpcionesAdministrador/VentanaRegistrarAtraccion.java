@@ -14,7 +14,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 
 public class VentanaRegistrarAtraccion extends JDialog {
-	public VentanaRegistrarAtraccion(JFrame parent, HashMap<String, Empleado> mapaEmpleados, HashMap<String, Atraccion> atracciones) {
+	public VentanaRegistrarAtraccion(JFrame parent, HashMap<String, Empleado> mapaEmpleados) {
 		super(parent, "Registrar Atracción", true);
 		setSize(400, 500);
 		setLocationRelativeTo(parent);
@@ -53,7 +53,7 @@ public class VentanaRegistrarAtraccion extends JDialog {
 					String estado = txtEstado.getText().trim();
 					int capacidad = Integer.parseInt(txtCapacidad.getText().trim());
 
-					registrarNuevaAtraccion(mapaEmpleados, atracciones, nombre, ubicacion, clima, exclusividad, tipo,
+					registrarNuevaAtraccion(mapaEmpleados, nombre, ubicacion, clima, exclusividad, tipo,
 							restricciones, riesgo, evento, empleados, estado, capacidad);
 
 					JOptionPane.showMessageDialog(VentanaRegistrarAtraccion.this, "Atracción registrada con éxito.");
@@ -70,9 +70,9 @@ public class VentanaRegistrarAtraccion extends JDialog {
 		add(new JLabel("Nivel de exclusividad:")); add(txtExclusividad);
 		add(new JLabel("Tipo de atracción:")); add(txtTipo);
 		add(new JLabel("Restricciones:")); add(txtRestricciones);
-		add(new JLabel("Nivel de riesgo:")); add(txtRiesgo);
-		add(new JLabel("Tipo de evento:")); add(txtEvento);
-		add(new JLabel("Empleados (códigos separados por -):")); add(txtEmpleados);
+		add(new JLabel("Nivel de riesgo (medio o alto):")); add(txtRiesgo);
+		add(new JLabel("Tipo de evento/atraccion:")); add(txtEvento);
+		add(new JLabel("Empleados (códigos separados por -. Ej: empleado1-empleado2-):")); add(txtEmpleados);
 		add(new JLabel("Estado de operación (true/false):")); add(txtEstado);
 		add(new JLabel("Capacidad:")); add(txtCapacidad);
 		add(Box.createVerticalStrut(10));
@@ -81,7 +81,7 @@ public class VentanaRegistrarAtraccion extends JDialog {
 		setVisible(true);
 	}
 
-	private void registrarNuevaAtraccion(HashMap<String, Empleado> mapaEmpleados, HashMap<String, Atraccion> atracciones,
+	private void registrarNuevaAtraccion(HashMap<String, Empleado> mapaEmpleados,
 										 String nombreAtraccion, int NumeroUbicacion, String StringClima, String nivelExclusividad,
 										 String tipoAtraccion, String restricciones, String nivelRiesgo, String tipoEvento,
 										 String empleados, String estadoOperacion, int capacidad) {

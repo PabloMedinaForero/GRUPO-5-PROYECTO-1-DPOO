@@ -3,7 +3,11 @@ package interfaz;
 import javax.swing.*;
 
 import conexion.ConexionDerby;
+import interfaz.ventanasOpcionesAdministrador.VentanaAgregarAdministrador;
+import interfaz.ventanasOpcionesAdministrador.VentanaAgregarLugarDeServicio;
 import interfaz.ventanasOpcionesAdministrador.VentanaOpcionesAtracciones;
+import interfaz.ventanasOpcionesAdministrador.VentanaOpcionesEmpleado;
+import interfaz.ventanasOpcionesAdministrador.VentanaOpcionesLugaresDeServicio;
 import sistema.atraccion.Atraccion;
 import sistema.lugarDeServicio.LugarDeServicio;
 import sistema.usuarios.Empleado;
@@ -26,10 +30,7 @@ public class VentanaAdministrador extends JFrame {
 			dispose();
 			return;
 		}
-		ConexionDerby conexion = new ConexionDerby();
-		HashMap<String, Empleado> mapaEmpleados = conexion.obtenerEmpleados();
-		HashMap<String, Atraccion> mapaAtracciones = conexion.obtenerAtracciones();
-		HashMap<String, LugarDeServicio> mapaLugarDeServicio = conexion.obtenerLugaresDeServicio();
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -40,22 +41,42 @@ public class VentanaAdministrador extends JFrame {
 		btnGestionAtracciones.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		btnGestionAtracciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VentanaOpcionesAtracciones(mapaEmpleados, mapaAtracciones, mapaLugarDeServicio);
+				new VentanaOpcionesAtracciones();
 			}
 		});
 		
 		JButton btnGestionEmpleados = new JButton("Opciones empleados");
 		btnGestionEmpleados.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnGestionEmpleados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaOpcionesEmpleado(VentanaAdministrador.this);
+			}
+		});
 
+		JButton btnGestionAdmins = new JButton("Agregar administradores");
+		btnGestionAdmins.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnGestionAdmins.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaAgregarAdministrador();
+			}
+		});
+		
 		JButton btnGestionLugaresDeServicio = new JButton("Opciones lugares de servicio");
 		btnGestionLugaresDeServicio.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-
+		btnGestionLugaresDeServicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaOpcionesLugaresDeServicio();
+			}
+		});
+		
 		panel.add(Box.createVerticalStrut(20));
 		panel.add(lbl);
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(btnGestionAtracciones);
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(btnGestionEmpleados);
+		panel.add(Box.createVerticalStrut(10));
+		panel.add(btnGestionAdmins);
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(btnGestionLugaresDeServicio);
 
