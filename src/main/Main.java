@@ -55,6 +55,15 @@ public class Main {
         }
 	}
 	
+	public static HashMap<String, Atraccion> getAtracciones() {
+	    if (atracciones == null) {
+	        ConexionDerby conexion = new ConexionDerby();
+	        atracciones = conexion.obtenerAtracciones();
+	    }
+	    return atracciones;
+	}
+	
+	
 	public static void printMenu(String[] args) {
 		 int opcion = printMainMenu();
 	     if (opcion == 1) {
@@ -833,10 +842,11 @@ public class Main {
 									System.out.println("Fast Pass: No");
 								}
 								int conteo = 1;
-								System.out.println("Atracciones disponibles: ");
+								/*System.out.println("Atracciones disponibles: ");
+								
 								for(Atraccion atraccion : tiquete.getAtraccionesValidas()) {
 									System.out.println(String.valueOf(conteo) + ". " + atraccion.getNombreAtraccion());
-								}	
+								}*/
 							}
 						}
 					}

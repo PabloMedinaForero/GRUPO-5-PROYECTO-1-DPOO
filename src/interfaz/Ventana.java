@@ -3,6 +3,9 @@ package interfaz;
 import java.awt.event.*;
 import javax.swing.*;
 
+import interfaz.ventanasOpcionesAdministrador.VentanaAgregarAdministrador;
+import interfaz.ventanasOpcionesCrearCuenta.VentanaCrearCuenta;
+
 public class Ventana extends JFrame {
 
 	private static JTabbedPane tabbedPane;
@@ -49,6 +52,16 @@ public class Ventana extends JFrame {
 				new VentanaCliente();
 			}
 		});
+		
+		// Botón Nueva Cuenta
+		JButton btnNuevaCuenta = new JButton("Nueva cuenta");
+		btnNuevaCuenta.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnNuevaCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VentanaCrearCuenta();
+			}
+		});
+				
 
 		panel1.add(Box.createVerticalStrut(20));
 		panel1.add(btnAdmin);
@@ -58,9 +71,13 @@ public class Ventana extends JFrame {
 		panel1.add(btnCliente);
 		panel1.add(Box.createVerticalStrut(30));
 
-		JLabel otroElemento = new JLabel("Aquí puedes poner más contenido debajo");
+		JLabel otroElemento = new JLabel("¿No tienes cuenta? Crea tu cuenta a continuación:");
 		otroElemento.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		panel1.add(otroElemento);
+		
+		
+		panel1.add(btnNuevaCuenta);
+		panel1.add(Box.createVerticalStrut(30));
 
 		tabbedPane.add("http://SenecPark.com", panel1);
 		ventana.add(tabbedPane);

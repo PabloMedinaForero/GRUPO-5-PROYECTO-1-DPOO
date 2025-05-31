@@ -30,7 +30,7 @@ public class VentanaAdministrador extends JFrame {
 			dispose();
 			return;
 		}
-		
+	
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
